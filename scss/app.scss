@@ -1,0 +1,159 @@
+/*		Color Settings       */
+$base-color: #bb0066;
+$text-color: #699;
+$circle-color: $base-color;
+$diamond-color: complement($base-color);
+$triangle-color: adjust-hue($base-color, 60deg);
+$parallelogram-color: hsla(hue($base-color), 60%,50%, 0.7);
+
+// Map to keep the colors for hover effect
+$colors: (
+  $circle-color: darken($circle-color, 10%),
+  $diamond-color: darken($diamond-color, 10%),
+  $triangle-color: darken($triangle-color, 10%),
+  $parallelogram-color: darken($parallelogram-color, 10%),
+  $text-color: darken($text-color, 10%)
+);
+//     Default shape size      */
+$shape-size: 100px;
+
+/*		Shape Mixins      */
+@mixin create-diamond($size: $shape-size, $bg-color: $diamond-color) {
+	width: $size;
+	height: $size;
+	transform: rotate(45deg);
+	background: $bg-color;
+}
+
+@mixin create-circle($size: $shape-size, $bg-color: $circle-color) {
+	width: $size;
+	height: $size;
+	border-radius: 50%;
+	background: $bg-color;
+}
+
+@mixin create-triangle($size: $shape-size, $border-color:$triangle-color) {
+	width: 0;
+	height: 0;
+	border-bottom: $size solid $border-color;
+	border-left: $size/2 solid transparent;
+	border-right: $size/2 solid transparent;
+	font-size: 0;
+	line-height: 0;
+}
+
+@mixin create-parallelogram($size: $shape-size, $bg-color: $parallelogram-color) {
+	width: $size;
+	height: $size;
+	transform: skew(-20deg);
+	background-color: $bg-color;
+}
+
+/*			Styles       */
+body {
+	background: lighten($base-color, 50%);
+}
+.container {
+	margin: 3em 2em;
+}
+
+.intro {
+	background: lighten($base-color, 20%);
+	padding: 0.1rem 0.5rem;
+	margin-bottom: 3rem;
+	//border: 1px solid blue;
+	border-radius: 10px;
+	box-shadow: 5px 5px 5px rgba(0,0,0, 0.5);
+
+	h2 {
+		text-shadow: 1px 1px 1px #fff;
+	}
+
+	p {
+		text-align: center;
+		color: lighten($base-color, 100%);
+		&:hover {
+			text-shadow: 2px 2px 1px map-get($colors, $text-color);
+		}
+	}
+}
+
+.shape {
+	float: left;
+	margin-right: 30px;
+}
+
+.circle {
+	@include create-circle();
+	&:hover {
+		background: map-get($colors, $circle-color);
+	}
+}
+
+.diamond {
+	@include create-diamond();
+	&:hover {
+		background: map-get($colors, $diamond-color);
+	}
+}
+
+.triangle {
+	@include create-triangle();
+	&:hover {
+		border-bottom: $shape-size solid map-get($colors, $triangle-color);
+	}
+}
+
+.parallelogram {
+	@include create-parallelogram();
+	margin-left: 100px;
+	&:hover {
+		background: map-get($colors, $parallelogram-color);
+	}
+}
+
+
+
+/* Hugo Giraudel's api for gradient borders */
+
+
+// Private function for equal stops
+// ------------------------------------------------------------
+// @param $colors: list of color
+//     ex: (red, blue, green)
+// ------------------------------------------------------------
+// @return two dimensional list
+
+@function stripes($colors) {
+	$gradients: ();
+	$stops: 100% / length($colors);
+
+	// Loop through colors
+	@for $i from 1 to length($colors) {
+		$gradients: append($gradients, nth($colors, $i) $i * $stops, comma);
+		@if $i < length($colors) {
+			$gradients: append($gradients, nth($colors, $i + 1) $i * $stops);
+		}
+	}
+
+	// Return gradient
+	@return $gradients;
+}
+$equal-stops: #1abc9c #2ecc71 #3498db #9b59b6 #34495e #f1c40f #e67e22 #e74c3c #ecf0f1 #95a5a6;
+.intro {
+	position: relative;
+	&:before,
+	&:after {
+		position: absolute;
+		content: '';
+		height: 2em;
+		top: 0;
+		left: 0;
+		right: 0;
+		background: stripes($equal-stops);
+	}
+	&:after {
+		top: auto;
+		bottom: 0;
+	}
+}

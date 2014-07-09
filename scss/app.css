@@ -1,0 +1,77 @@
+/*		Color Settings       */
+/*		Shape Mixins      */
+/*			Styles       */
+body {
+  background: #ffbbe0; }
+
+.container {
+  margin: 3em 2em; }
+
+.intro {
+  background: #ff229b;
+  padding: 0.1rem 0.5rem;
+  margin-bottom: 3rem;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5); }
+  .intro h2 {
+    text-shadow: 1px 1px 1px #fff; }
+  .intro p {
+    text-align: center;
+    color: white; }
+    .intro p:hover {
+      text-shadow: 2px 2px 1px #527a7a; }
+
+.shape {
+  float: left;
+  margin-right: 30px; }
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #bb0066; }
+  .circle:hover {
+    background: #88004a; }
+
+.diamond {
+  width: 100px;
+  height: 100px;
+  transform: rotate(45deg);
+  background: #00bb55; }
+  .diamond:hover {
+    background: #00883e; }
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-bottom: 100px solid #bb5500;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  font-size: 0;
+  line-height: 0; }
+  .triangle:hover {
+    border-bottom: 100px solid #883e00; }
+
+.parallelogram {
+  width: 100px;
+  height: 100px;
+  transform: skew(-20deg);
+  background-color: rgba(204, 51, 134, 0.7);
+  margin-left: 100px; }
+  .parallelogram:hover {
+    background: rgba(163, 41, 108, 0.7); }
+
+/* Hugo Giraudel's api for gradient borders */
+.intro {
+  position: relative; }
+  .intro:before, .intro:after {
+    position: absolute;
+    content: '';
+    height: 2em;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #1abc9c 10%, #2ecc71 10%, #2ecc71 20%, #3498db 20%, #3498db 30%, #9b59b6 30%, #9b59b6 40%, #34495e 40%, #34495e 50%, #f1c40f 50%, #f1c40f 60%, #e67e22 60%, #e67e22 70%, #e74c3c 70%, #e74c3c 80%, #ecf0f1 80%, #ecf0f1 90%, #95a5a6 90%; }
+  .intro:after {
+    top: auto;
+    bottom: 0; }
